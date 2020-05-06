@@ -64,11 +64,35 @@ router.get('/:id/posts', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-  // do your magic!
+  userDB.remove(req.params.id)
+    .then(count => {
+      if (count > 0) {
+        res.status(200).json({
+          message: "THe user has been deleted."
+        });
+      } else {
+        res.status(404).json({
+          message: "A user with the specified ID does not exist."
+        });
+      }
+    })
+    .catch(error => {
+      res.status(500).json({
+        error: "The user could not be retrieved."
+      });
+    })
 });
 
 router.put('/:id', (req, res) => {
-  // do your magic!
+  userDB.update(req.params.id, req.body)
+    .then(update => {
+      res.status(200).json(update)
+    })
+    .catch(error => {
+      res.status(500).json({
+        error: "The user's information could not be updated."
+      });
+    });
 });
 
 //custom middleware
