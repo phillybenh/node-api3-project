@@ -2,6 +2,7 @@ const express = require('express');
 const userRouter = require('./users/userRouter.js');
 const postRouter = require('./posts/postRouter.js');
 
+const chalk = require('chalk');
 
 const server = express();
 
@@ -19,7 +20,7 @@ server.use(express.json());
 
 function logger(req, res, next) {
   const timestamp = new Date();
-  console.log(`[${timestamp}] | Method: ${req.method} | Req URL: ${req.url}`);
+  console.log(chalk.bgBlue(`[${timestamp}] | Method: ${req.method} | Req URL: ${req.url}`));
   next();
 };
 server.use(logger);
